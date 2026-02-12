@@ -5,39 +5,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIGA ARAM - AO VIVO</title>
     <style>
-        /* (Manti o seu estilo visual anterior para ficar bonito) */
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0a0e14; color: #e0e0e0; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; background: #161b22; padding: 30px; border-radius: 12px; border: 1px solid #30363d; }
-        h1, h2 { color: #58a6ff; text-align: center; text-transform: uppercase; }
-        .header-info { display: flex; justify-content: space-around; background: #0d1117; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #58a6ff; }
-        table { width: 100%; border-collapse: collapse; background: #0d1117; }
-        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #30363d; }
-        th { background-color: #1f2937; color: #58a6ff; }
-        .rule-box { background: #21262d; padding: 15px; border-radius: 8px; border: 1px solid #3fb950; margin-top: 20px; }
-        .loading { text-align: center; color: #f08d49; font-weight: bold; }
+        :root {
+            --bg-color: #0d1117;
+            --container-bg: #161b22;
+            --card-bg: #0d1117;
+            --blue-accent: #58a6ff;
+            --orange-accent: #f08d49;
+            --green-accent: #3fb950;
+            --red-accent: #f85149;
+            --text-color: #e0e0e0;
+            --border-color: #30363d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            color: var(--blue-accent);
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Top Info Cards */
+        .header-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--blue-accent);
+        }
+
+        .info-card b {
+            display: block;
+            color: var(--orange-accent);
+            text-transform: uppercase;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .info-card span {
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        /* Table Style */
+        h2 {
+            color: var(--blue-accent);
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th {
+            color: var(--blue-accent);
+            font-size: 13px;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .pos-1 { color: var(--green-accent); font-weight: bold; }
+
+        /* Rules Section */
+        .rules-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .rule-box {
+            border: 1px solid var(--green-accent);
+            border-radius: 8px;
+            padding: 20px;
+            background: rgba(63, 185, 80, 0.05);
+        }
+
+        .rule-box.red {
+            border-color: var(--red-accent);
+            background: rgba(248, 81, 73, 0.05);
+        }
+
+        .rule-title {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .rule-title.green { color: var(--green-accent); }
+        .rule-title.red { color: var(--red-accent); }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        li {
+            font-size: 13px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        li strong { color: #fff; }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #8b949e;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>🏆 LIGA ARAM: CONFUSÃO É CERTA</h1>
-    
+
     <div class="header-info">
-        <div><b>FORMATO</b> Pontos Corridos</div>
-        <div><b>VITÓRIA</b> 3 Pontos</div>
-        <div><b>TAXA</b> R$ 50,00 / Time</div>
+        <div class="info-card">
+            <b>INSCRIÇÃO</b>
+            [cite_start]<span>R$ 50,00 por Equipe [cite: 3]</span>
+        </div>
+        <div class="info-card">
+            <b>FORMATO</b>
+            <span>Pontos Corridos (Vitória = 3 pts)</span>
+        </div>
+        <div class="info-card">
+            <b>FORMAÇÃO</b>
+            <span>Trios, Quartetos ou Quintetos</span>
+        </div>
     </div>
 
-    <h2>Tabela de Classificação (Tempo Real)</h2>
-    <div id="loading" class="loading">Carregando dados da planilha...</div>
-    <table id="tabela-aram" style="display:none;">
+    <h2>TABELA DE CLASSIFICAÇÃO</h2>
+    <table id="tabela-aram">
         <thead>
             <tr>
                 <th>Posição</th>
                 <th>Equipe</th>
-                <th>Jogos</th>
+                <th>Partidas</th>
                 <th>Vitórias</th>
-                <th>Saldo</th>
+                <th>Saldo Abates</th>
                 <th>Pontos</th>
             </tr>
         </thead>
@@ -45,53 +194,65 @@
             </tbody>
     </table>
 
-    <div class="rule-box">
-        <h3>⚖️ Regras Rápidas</h3>
-        <ul>
-            <li>Desempate: Saldo de Abates > Confronto Direto > Morte Súbita.</li>
-            <li>Pause: 5 min por time. W.O. após 20 min de atraso.</li>
-        </ul>
+    <div class="rules-container">
+        <div class="rule-box">
+            <div class="rule-title green">⚖️ Critérios de Desempate</div>
+            <ul>
+                [cite_start]<li><strong>1º Saldo de Abates:</strong> Maior diferença entre kills e deaths na competição. [cite: 12]</li>
+                [cite_start]<li><strong>2º Confronto Direto:</strong> Resultado da última partida disputada entre os times empatados. [cite: 13]</li>
+                [cite_start]<li><strong>3º Morte Súbita:</strong> Uma partida de "Cega" única no domingo à noite. [cite: 15]</li>
+            </ul>
+        </div>
+
+        <div class="rule-box red">
+            <div class="rule-title red">⚠️ Conexão e W.O.</div>
+            <ul>
+                [cite_start]<li><strong>Pause:</strong> Permitido apenas 5 minutos de pause por equipe em cada partida. [cite: 21]</li>
+                [cite_start]<li><strong>Tolerância:</strong> 10 minutos para quedas de internet ou ausência de jogador. [cite: 23]</li>
+                <li><strong>W.O. [cite_start]Parcial:</strong> Perda automática da partida atual após 10 min de ausência. [cite: 24]</li>
+                <li><strong>W.O. [cite_start]Total:</strong> Após 20 min sem retorno ou substituto, vitória do adversário (3 pontos). [cite: 26, 27]</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        [cite_start]O time que somar mais pontos até domingo leva o montante total arrecadado das inscrições. [cite: 5]
     </div>
 </div>
 
 <script>
-    // SUBSTITUA O LINK ABAIXO PELO LINK DO SEU CSV PUBLICADO
-    const SHEET_URL = https://docs.google.com/spreadsheets/d/e/2PACX-1vRUeUJJ1AvSWlmC4vExOxHrcbJD2AVgDKcUxH1rE1EoKMSAatwyFA9gd8taGC2yBwGYNJDcMFjSdvLr/pub?output=csv;
+    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRUeUJJ1AvSWlmC4vExOxHrcbJD2AVgDKcUxH1rE1EoKMSAatwyFA9gd8taGC2yBwGYNJDcMFjSdvLr/pubhtml';
 
-    async function carregarDados() {
+    async function atualizarTabela() {
         try {
             const response = await fetch(SHEET_URL);
             const data = await response.text();
-            const rows = data.split('\n').slice(1); // Ignora o cabeçalho
-            const corpoTabela = document.getElementById('corpo-tabela');
-            
-            corpoTabela.innerHTML = '';
-            rows.forEach(row => {
+            const rows = data.split('\n').slice(1);
+            const tbody = document.getElementById('corpo-tabela');
+            tbody.innerHTML = '';
+
+            rows.forEach((row, index) => {
                 const cols = row.split(',');
                 if (cols.length >= 6) {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><b>${cols[0]}</b></td>
+                        <td class="${index === 0 ? 'pos-1' : ''}">${cols[0]}</td>
                         <td>${cols[1]}</td>
                         <td>${cols[2]}</td>
                         <td>${cols[3]}</td>
                         <td>${cols[4]}</td>
-                        <td style="color:#3fb950"><strong>${cols[5]}</strong></td>
+                        <td><strong>${cols[5]}</strong></td>
                     `;
-                    corpoTabela.appendChild(tr);
+                    tbody.appendChild(tr);
                 }
             });
-
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('tabela-aram').style.display = 'table';
-        } catch (error) {
-            document.getElementById('loading').innerText = 'Erro ao carregar dados. Verifique o link da planilha.';
+        } catch (e) {
+            console.error("Erro ao carregar dados", e);
         }
     }
 
-    carregarDados();
-    // Atualiza automaticamente a cada 30 segundos
-    setInterval(carregarDados, 30000);
+    atualizarTabela();
+    setInterval(atualizarTabela, 30000); // Atualiza a cada 30 segundos
 </script>
 
 </body>
