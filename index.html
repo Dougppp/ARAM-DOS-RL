@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIGA ARAM - AO VIVO</title>
+    <style>
+        /* (Manti o seu estilo visual anterior para ficar bonito) */
+        body { font-family: 'Segoe UI', sans-serif; background-color: #0a0e14; color: #e0e0e0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: #161b22; padding: 30px; border-radius: 12px; border: 1px solid #30363d; }
+        h1, h2 { color: #58a6ff; text-align: center; text-transform: uppercase; }
+        .header-info { display: flex; justify-content: space-around; background: #0d1117; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 5px solid #58a6ff; }
+        table { width: 100%; border-collapse: collapse; background: #0d1117; }
+        th, td { padding: 15px; text-align: center; border-bottom: 1px solid #30363d; }
+        th { background-color: #1f2937; color: #58a6ff; }
+        .rule-box { background: #21262d; padding: 15px; border-radius: 8px; border: 1px solid #3fb950; margin-top: 20px; }
+        .loading { text-align: center; color: #f08d49; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏆 LIGA ARAM: CONFUSÃO É CERTA</h1>
+    
+    <div class="header-info">
+        <div><b>FORMATO</b> Pontos Corridos</div>
+        <div><b>VITÓRIA</b> 3 Pontos</div>
+        <div><b>TAXA</b> R$ 50,00 / Time</div>
+    </div>
+
+    <h2>Tabela de Classificação (Tempo Real)</h2>
+    <div id="loading" class="loading">Carregando dados da planilha...</div>
+    <table id="tabela-aram" style="display:none;">
+        <thead>
+            <tr>
+                <th>Posição</th>
+                <th>Equipe</th>
+                <th>Jogos</th>
+                <th>Vitórias</th>
+                <th>Saldo</th>
+                <th>Pontos</th>
+            </tr>
+        </thead>
+        <tbody id="corpo-tabela">
+            </tbody>
+    </table>
+
+    <div class="rule-box">
+        <h3>⚖️ Regras Rápidas</h3>
+        <ul>
+            <li>Desempate: Saldo de Abates > Confronto Direto > Morte Súbita.</li>
+            <li>Pause: 5 min por time. W.O. após 20 min de atraso.</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // SUBSTITUA O LINK ABAIXO PELO LINK DO SEU CSV PUBLICADO
+    const SHEET_URL = https://docs.google.com/spreadsheets/d/e/2PACX-1vRUeUJJ1AvSWlmC4vExOxHrcbJD2AVgDKcUxH1rE1EoKMSAatwyFA9gd8taGC2yBwGYNJDcMFjSdvLr/pub?output=csv;
+
+    async function carregarDados() {
+        try {
+            const response = await fetch(SHEET_URL);
+            const data = await response.text();
+            const rows = data.split('\n').slice(1); // Ignora o cabeçalho
+            const corpoTabela = document.getElementById('corpo-tabela');
+            
+            corpoTabela.innerHTML = '';
+            rows.forEach(row => {
+                const cols = row.split(',');
+                if (cols.length >= 6) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><b>${cols[0]}</b></td>
+                        <td>${cols[1]}</td>
+                        <td>${cols[2]}</td>
+                        <td>${cols[3]}</td>
+                        <td>${cols[4]}</td>
+                        <td style="color:#3fb950"><strong>${cols[5]}</strong></td>
+                    `;
+                    corpoTabela.appendChild(tr);
+                }
+            });
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('tabela-aram').style.display = 'table';
+        } catch (error) {
+            document.getElementById('loading').innerText = 'Erro ao carregar dados. Verifique o link da planilha.';
+        }
+    }
+
+    carregarDados();
+    // Atualiza automaticamente a cada 30 segundos
+    setInterval(carregarDados, 30000);
+</script>
+
+</body>
+</html>
