@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONTROLE DE CAIXA E PROVAS - LIGA ARAM</title>
+    <title>CONTROLE DE CAIXA E PROVAS - ARAM DOS RL</title>
     <style>
         :root {
             --bg-body: #0d1117;
@@ -17,6 +17,19 @@
         .container { max-width: 1000px; margin: auto; background: var(--bg-container); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
         h1, h2 { color: var(--blue-accent); text-align: center; text-transform: uppercase; }
         
+        /* Seção Pix */
+        .pix-box {
+            background: #1c2128;
+            border: 2px dashed var(--green);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .pix-box h3 { color: var(--green); margin-top: 0; text-transform: uppercase; }
+        .pix-key { font-size: 20px; font-weight: bold; color: #fff; letter-spacing: 1px; }
+        .pix-details { color: #8b949e; margin-top: 5px; font-size: 14px; }
+
         /* Estilo das Tabelas */
         table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: var(--bg-body); border-radius: 8px; overflow: hidden; }
         th { background: #1f2937; color: var(--blue-accent); padding: 12px; font-size: 13px; }
@@ -38,6 +51,13 @@
 <div class="container">
     <a href="index.html" class="btn-voltar">← Voltar para Classificação</a>
     <h1>💰 GESTÃO DE CAIXA E PROVAS</h1>
+
+    <div class="pix-box">
+        <h3>💳 Dados para Pagamento</h3>
+        <div class="pix-key">Pix: 117.440.914-20</div>
+        <div class="pix-details">Titular: Douglas | Banco: Itaú</div>
+        <div style="font-size: 12px; margin-top: 10px; color: var(--orange-accent);">Valor: R$ 10,00 por jogador</div>
+    </div>
 
     <h2>Controle de Pagamentos</h2>
     <table id="tabela-pagamentos">
@@ -65,8 +85,7 @@
 </div>
 
 <script>
-    // IMPORTANTE: Crie uma SEGUNDA ABA na sua planilha e publique como CSV
-    // Colunas da Planilha: Time, Jogador, Valor, Status, Data, Link_Imagem
+    // Link do CSV da aba de Controle/Admin
     const ADMIN_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRUeUJJ1AvSWlmC4vExOxHrcbJD2AVgDKcUxH1rE1EoKMSAatwyFA9gd8taGC2yBwGYNJDcMFjSdvLr/pub?gid=1281303703&single=true&output=csv';
 
     async function carregarAdmin() {
@@ -86,7 +105,6 @@
                 const cols = line.split(',').map(c => c.replace(/"/g, '').trim());
                 
                 if (cols.length >= 5) {
-                    // Preenche Tabela de Pagamentos
                     const tr = document.createElement('tr');
                     const pago = cols[3].toLowerCase() === 'pago';
                     if(pago) totalArrecadado += parseFloat(cols[2].replace('R$', '').replace(',', '.'));
@@ -100,7 +118,6 @@
                     `;
                     corpoPgto.appendChild(tr);
 
-                    // Preenche Galeria de Prints (se houver link na coluna 6)
                     if (cols[5] && cols[5].startsWith('http')) {
                         const card = document.createElement('div');
                         card.className = 'screenshot-card';
@@ -124,6 +141,7 @@
     }
 
     carregarAdmin();
+    setInterval(carregarAdmin, 60000); // Atualiza a cada 1 minuto
 </script>
 
 </body>
