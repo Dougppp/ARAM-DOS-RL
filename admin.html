@@ -3,146 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONTROLE DE CAIXA E PROVAS - ARAM DOS RL</title>
+    <title>ADMIN - ARAM DOS RL</title>
     <style>
         :root {
             --bg-body: #0d1117;
             --bg-container: #161b22;
-            --blue-accent: #58a6ff;
-            --orange-accent: #f08d49;
+            --blue: #58a6ff;
+            --orange: #f08d49;
             --green: #3fb950;
             --border: #30363d;
         }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg-body); color: #e0e0e0; margin: 0; padding: 20px; }
         .container { max-width: 1000px; margin: auto; background: var(--bg-container); padding: 30px; border-radius: 12px; border: 1px solid var(--border); }
-        h1, h2 { color: var(--blue-accent); text-align: center; text-transform: uppercase; }
         
-        /* Seção Pix */
-        .pix-box {
-            background: #1c2128;
-            border: 2px dashed var(--green);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .pix-box h3 { color: var(--green); margin-top: 0; text-transform: uppercase; }
-        .pix-key { font-size: 20px; font-weight: bold; color: #fff; letter-spacing: 1px; }
-        .pix-details { color: #8b949e; margin-top: 5px; font-size: 14px; }
+        /* Menu de Navegação */
+        .nav-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
+        .nav-link { padding: 10px 20px; background: #21262d; border: 1px solid var(--border); color: var(--blue); text-decoration: none; border-radius: 6px; font-weight: bold; transition: 0.3s; }
+        .nav-link:hover, .nav-link.active { background: var(--blue); color: white; border-color: var(--blue); }
 
-        /* Estilo das Tabelas */
-        table { width: 100%; border-collapse: collapse; margin-bottom: 40px; background: var(--bg-body); border-radius: 8px; overflow: hidden; }
-        th { background: #1f2937; color: var(--blue-accent); padding: 12px; font-size: 13px; }
-        td { padding: 12px; text-align: center; border-bottom: 1px solid var(--border); font-size: 14px; }
+        .pix-box { background: #1c2128; border: 2px dashed var(--green); border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 30px; }
+        .pix-key { font-size: 22px; font-weight: bold; color: #fff; display: block; margin: 10px 0; }
+        
+        table { width: 100%; border-collapse: collapse; background: var(--bg-body); margin-bottom: 40px; }
+        th { background: #1f2937; color: var(--blue); padding: 12px; }
+        td { padding: 12px; text-align: center; border-bottom: 1px solid var(--border); }
         .status-pago { color: var(--green); font-weight: bold; }
-        
-        /* Galeria de Prints */
-        .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .screenshot-card { background: var(--bg-body); border: 1px solid var(--border); padding: 10px; border-radius: 8px; text-align: center; }
-        .screenshot-card img { width: 100%; border-radius: 4px; cursor: pointer; transition: 0.3s; }
-        .screenshot-card img:hover { transform: scale(1.05); }
-        .screenshot-info { margin-top: 10px; font-size: 12px; color: var(--orange-accent); }
 
-        .btn-voltar { display: inline-block; margin-bottom: 20px; color: var(--blue-accent); text-decoration: none; font-size: 14px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .print-card { background: #0d1117; border: 1px solid var(--border); border-radius: 8px; padding: 8px; text-align: center; }
+        .print-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <a href="index.html" class="btn-voltar">← Voltar para Classificação</a>
-    <h1>💰 GESTÃO DE CAIXA E PROVAS</h1>
+    <nav class="nav-menu">
+        <a href="index.html" class="nav-link">🏆 Classificação</a>
+        <a href="admin.html" class="nav-link active">💰 Pagamentos & Provas</a>
+    </nav>
 
     <div class="pix-box">
-        <h3>💳 Dados para Pagamento</h3>
-        <div class="pix-key">Pix: 117.440.914-20</div>
-        <div class="pix-details">Titular: Douglas | Banco: Itaú</div>
-        <div style="font-size: 12px; margin-top: 10px; color: var(--orange-accent);">Valor: R$ 10,00 por jogador</div>
+        <span style="color: var(--green)">🏆 CHAVE PIX PARA INSCRIÇÃO</span>
+        <span class="pix-key">117.440.914-20</span>
+        <div style="font-size: 14px; color: #8b949e;">Douglas - Itaú | <b>Valor: R$ 10,00 por jogador</b></div>
     </div>
 
-    <h2>Controle de Pagamentos</h2>
-    <table id="tabela-pagamentos">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Jogador</th>
-                <th>Valor</th>
-                <th>Status</th>
-                <th>Data Pgto</th>
-            </tr>
-        </thead>
-        <tbody id="corpo-pagamentos">
-            </tbody>
+    <h2 style="color: var(--blue)">✅ Status de Pagamento</h2>
+    <table>
+        <thead><tr><th>Equipe</th><th>Jogador</th><th>Valor</th><th>Status</th></tr></thead>
+        <tbody id="corpo-pagamentos"></tbody>
     </table>
 
-    <h2>🖼️ Histórico de Partidas (Prints)</h2>
-    <div id="loading-prints" style="text-align: center;">Carregando galeria de provas...</div>
-    <div class="screenshot-grid" id="galeria-prints">
-        </div>
-
-    <div style="text-align: center; margin-top: 40px; font-size: 12px; color: #8b949e;">
-        Pote Total Atual: <span id="pote-total" style="color: var(--green); font-weight: bold;">R$ 0,00</span>
-    </div>
+    <h2 style="color: var(--blue)">🖼️ Provas das Partidas</h2>
+    <div class="gallery-grid" id="galeria-prints"></div>
 </div>
 
 <script>
-    // Link do CSV da aba de Controle/Admin
     const ADMIN_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRUeUJJ1AvSWlmC4vExOxHrcbJD2AVgDKcUxH1rE1EoKMSAatwyFA9gd8taGC2yBwGYNJDcMFjSdvLr/pub?gid=1281303703&single=true&output=csv';
-
-    async function carregarAdmin() {
+    async function carregarDados() {
         try {
             const r = await fetch(ADMIN_CSV);
             const t = await r.text();
             const lines = t.split(/\r?\n/).filter(l => l.trim() !== "").slice(1);
-            
-            const corpoPgto = document.getElementById('corpo-pagamentos');
+            const corpo = document.getElementById('corpo-pagamentos');
             const galeria = document.getElementById('galeria-prints');
-            let totalArrecadado = 0;
-
-            corpoPgto.innerHTML = '';
-            galeria.innerHTML = '';
+            corpo.innerHTML = ''; galeria.innerHTML = '';
 
             lines.forEach(line => {
                 const cols = line.split(',').map(c => c.replace(/"/g, '').trim());
-                
-                if (cols.length >= 5) {
+                if (cols.length >= 4) {
                     const tr = document.createElement('tr');
-                    const pago = cols[3].toLowerCase() === 'pago';
-                    if(pago) totalArrecadado += parseFloat(cols[2].replace('R$', '').replace(',', '.'));
-
-                    tr.innerHTML = `
-                        <td>${cols[0]}</td>
-                        <td>${cols[1]}</td>
-                        <td>${cols[2]}</td>
-                        <td class="${pago ? 'status-pago' : ''}">${cols[3]}</td>
-                        <td>${cols[4]}</td>
-                    `;
-                    corpoPgto.appendChild(tr);
+                    const pago = cols[3]?.toLowerCase() === 'pago';
+                    tr.innerHTML = `<td>${cols[0]}</td><td>${cols[1]}</td><td>${cols[2]}</td><td class="${pago?'status-pago':''}">${cols[3]}</td>`;
+                    corpo.appendChild(tr);
 
                     if (cols[5] && cols[5].startsWith('http')) {
-                        const card = document.createElement('div');
-                        card.className = 'screenshot-card';
-                        card.innerHTML = `
-                            <a href="${cols[5]}" target="_blank">
-                                <img src="${cols[5]}" alt="Print do Jogo">
-                            </a>
-                            <div class="screenshot-info">${cols[0]} - ${cols[4]}</div>
-                        `;
-                        galeria.appendChild(card);
+                        const div = document.createElement('div');
+                        div.className = 'print-card';
+                        div.innerHTML = `<img src="${cols[5]}"><div style="font-size:12px; margin-top:5px; color:var(--orange)">${cols[0]}</div>`;
+                        galeria.appendChild(div);
                     }
                 }
             });
-
-            document.getElementById('pote-total').innerText = `R$ ${totalArrecadado.toFixed(2)}`;
-            document.getElementById('loading-prints').style.display = 'none';
-
-        } catch (e) {
-            console.error("Erro ao carregar admin", e);
-        }
+        } catch (e) { console.error(e); }
     }
-
-    carregarAdmin();
-    setInterval(carregarAdmin, 60000); // Atualiza a cada 1 minuto
+    carregarDados();
+    setInterval(carregarDados, 60000);
 </script>
-
 </body>
 </html>
